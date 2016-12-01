@@ -1,0 +1,51 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_playbook
+  hosts: apache-servers
+  ansible_connection: local
+  ansible_verbose: true
+  ansible_verbosity: 4
+  require_chef_for_busser: false
+  requirements_path: requirements.yml
+
+platforms:
+  - name: centos-7.2
+    driver_plugin: vagrant
+#    driver_config:
+#      box: mvbcoding/awslinux
+    driver_config:
+      box: centos-7.2
+#  - name: centos-7
+#    driver_plugin: vagrant
+#    driver_config:
+#      box: centos-7
+#      box_url: https://github.com/holms/vagrant-centos7-box/releases/download/7.1.1503.001/CentOS-7.1.1503-x86_64-netboot.box
+#      network:
+#      - ['forwarded_port', {guest: 8080, host: 8080}]
+#      - [ 'private_network', { ip: '192.168.33.11' } ]
+
+verifier:
+  name: serverspec
+  sudo_path: true
+
+suites:
+  - name: ansible
+    driver_config:
+      network:
+#      - ['private_network', { type: 'dhcp' }]
+#      - [ 'private_network', { ip: '172.28.128.6' } ]
+#      - [ 'private_network', { ip: '127.0.0.1' } ]
+#      - ['public_network']
+    verifier:
+      default_pattern: true
+      bundler_path: '/usr/local/bin'
+      rspec_path: '/usr/local/bin'
+      env_vars:
+        TARGET_HOST: 127.0.0.1
+        TARGET_PORT: 2222
+        LOGIN_USER: vagrant
+        LOGIN_PASSWORD: vagrant
+
