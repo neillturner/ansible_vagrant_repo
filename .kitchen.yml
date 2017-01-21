@@ -14,10 +14,18 @@ provisioner:
 platforms:
   - name: centos-7.2
     driver_plugin: vagrant
-#    driver_config:
-#      box: mvbcoding/awslinux
     driver_config:
       box: centos-7.2
+    verifier:
+      env_vars:
+        LOGIN_USER: vagrant
+        LOGIN_PASSWORD: vagrant
+  - name: puppetlabs/ubuntu-16.04-64-nocm
+    driver_plugin: vagrant
+    verifier:
+      env_vars:
+        LOGIN_USER: root
+        LOGIN_PASSWORD: puppet
 #  - name: centos-7
 #    driver_plugin: vagrant
 #    driver_config:
@@ -46,6 +54,3 @@ suites:
       env_vars:
         TARGET_HOST: 127.0.0.1
         TARGET_PORT: 2222
-        LOGIN_USER: vagrant
-        LOGIN_PASSWORD: vagrant
-
