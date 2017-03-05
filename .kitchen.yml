@@ -10,6 +10,12 @@ provisioner:
   ansible_verbosity: 4
   require_chef_for_busser: false
   requirements_path: requirements.yml
+  extra_vars_file: 'group_vars/production.yml'
+#  extra_vars:
+#    test: testing
+
+transport:
+  max_ssh_sessions: 6
 
 platforms:
   - name: centos-7.2
