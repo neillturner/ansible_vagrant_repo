@@ -8,14 +8,22 @@ provisioner:
   ansible_connection: local
   ansible_verbose: true
   ansible_verbosity: 4
+  ansible_apt_repo: ppa:ansible/ansible-2.1
   require_chef_for_busser: false
   requirements_path: requirements.yml
-  extra_vars_file: 'group_vars/production.yml'
+#  custom_pre_install_command: echo '** custom pre install***'
+#  custom_post_install_command: echo '** custom post install***'
+#  custom_pre_play_command: echo '** custom pre play***'
+#  custom_post_play_command: echo '** custom post play***'
+#  idempotency_test: true
+#  extra_vars_file: 'group_vars/production.yml'
 #  extra_vars:
 #    test: testing
+#  additional_ssh_private_keys:
+#    - C:/repository/ansible_vagrant_repo/id_rsa
 
 transport:
-  max_ssh_sessions: 6
+#  max_ssh_sessions: 6
 
 platforms:
   - name: centos-7.2
@@ -32,6 +40,15 @@ platforms:
       env_vars:
         LOGIN_USER: root
         LOGIN_PASSWORD: puppet
+  - name: debian-8.7
+    ansible_platform: debian
+    ansible_version: 2.1
+    sudo: true
+    ansible_sudo: true
+    update_package_repos: false
+    driver_plugin: vagrant
+    driver_config:
+      box: bento/debian-8.7
 #  - name: centos-7
 #    driver_plugin: vagrant
 #    driver_config:
