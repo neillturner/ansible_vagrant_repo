@@ -23,13 +23,15 @@ provisioner:
 #    - C:/repository/ansible_vagrant_repo/id_rsa
 
 transport:
-#  max_ssh_sessions: 6
+  max_ssh_sessions: 6
 
 platforms:
   - name: centos-7.2
     driver_plugin: vagrant
     driver_config:
-      box: centos-7.2
+      box: bento/centos-7.2
+    provisioner:
+      require_pip: true
     verifier:
       env_vars:
         LOGIN_USER: vagrant
@@ -40,6 +42,13 @@ platforms:
       env_vars:
         LOGIN_USER: root
         LOGIN_PASSWORD: puppet
+  - name: debian
+    driver:
+      box: debian/jessie64
+      box_version: 8.7.0
+  - name: debian-jessie-64
+    driver:
+      box: thoughtbot/debian-jessie-64
   - name: debian-8.7
     ansible_platform: debian
     ansible_version: 2.1
@@ -49,6 +58,17 @@ platforms:
     driver_plugin: vagrant
     driver_config:
       box: bento/debian-8.7
+  - name: ubuntu-16.04
+    provisioner:
+      ansible_connection: local
+      ansible_host_key_checking: false
+      ansible_version: 2.2.1.0
+      idempotency_test: true
+      require_ansible_repo: false
+      require_chef_for_busser: false
+      require_ruby_for_busser: false
+      require_pip: true
+      requirements_path: requirements.yml
 #  - name: centos-7
 #    driver_plugin: vagrant
 #    driver_config:
