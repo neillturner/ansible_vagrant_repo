@@ -8,7 +8,7 @@ provisioner:
   ansible_connection: local
   ansible_verbose: true
   ansible_verbosity: 4
-  ansible_apt_repo: ppa:ansible/ansible-2.1
+# ansible_apt_repo: ppa:ansible/ansible-2.1
   require_chef_for_busser: false
   requirements_path: requirements.yml
 #  custom_pre_install_command: echo '** custom pre install***'
@@ -42,6 +42,12 @@ platforms:
       env_vars:
         LOGIN_USER: root
         LOGIN_PASSWORD: puppet
+  - name: generic/ubuntu1804
+    driver_plugin: vagrant
+    verifier:
+      env_vars:
+        LOGIN_USER: ubuntu
+        LOGIN_PASSWORD: ubuntu
   - name: debian
     driver:
       box: debian/jessie64
